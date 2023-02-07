@@ -143,7 +143,7 @@ def get_dict(word_set):
         index += 1
     return word_index_dict, index_word_dict
 
-def text_precess(train_text_loc, test_text_loc=None):
+def text_precess(train_text_loc, save_dir, test_text_loc=None):
     train_tokens = get_tokenlized(train_text_loc)
     if test_text_loc is None:
         test_tokens = list()
@@ -156,13 +156,14 @@ def text_precess(train_text_loc, test_text_loc=None):
         sequence_len = len(max(train_tokens, key=len))
     else:
         sequence_len = max(len(max(train_tokens, key=len)), len(max(test_tokens, key=len)))
-    with open('save/eval_data_g1d1.txt', 'w') as outfile:
-        outfile.write(text_to_code(test_tokens, word_index_dict, sequence_len))
+    eval_path = save_dir + '/eval_data.txt'
+    with open(eval_path, 'w') as outfile:
+       outfile.write(text_to_code(test_tokens, word_index_dict, sequence_len))
 
     return sequence_len, len(word_index_dict) + 1
 
 #KratikaA: added to process labelled input real data stored in the csv format
-def csv_text_precess(train_text_loc, test_text_loc=None):
+def csv_text_precess(train_text_loc, save_dir, test_text_loc=None):
     train_tokens, train_labels = get_csv_tokenlized(train_text_loc) # train_tokens is a list of list, train_labels is a list
     unique_labels = list(set(train_labels)) # get all unique labels
     if test_text_loc is None:
@@ -176,7 +177,8 @@ def csv_text_precess(train_text_loc, test_text_loc=None):
         sequence_len = len(max(train_tokens, key=len))
     else:
         sequence_len = max(len(max(train_tokens, key=len)), len(max(test_tokens, key=len)))
-    with open('save/eval_data_g1d1.txt', 'w') as outfile:
-        outfile.write(text_to_code_with_labels(train_tokens, word_index_dict, sequence_len, train_labels)) #, label_index_dict))
+    eval_path = save_dir + '/eval_data.txt'
+    with open(eval_path, 'w') as outfile:
+       outfile.write(text_to_code_with_labels(train_tokens, word_index_dict, sequence_len, train_labels)) #, label_index_dict))
 
     return sequence_len, len(word_index_dict) + 1, train_labels

@@ -1,28 +1,41 @@
 import getopt
 import sys
+import tensorflow as tf
+from tensorflow.core.protobuf import rewriter_config_pb2
+config = tf.ConfigProto()
+off = rewriter_config_pb2.RewriterConfig.OFF
+config.graph_options.rewrite_options.memory_optimization  = off
 
 from colorama import Fore
 
-# from models.gsgan.Gsgan import Gsgan
-# from models.leakgan.Leakgan import Leakgan
-# from models.maligan_basic.Maligan import Maligan
-# from models.mle.Mle import Mle
-# from models.rankgan.Rankgan import Rankgan
-# from models.seqgan.Seqgan import Seqgan
-from models.cseqgan.CSeqgan import CSeqgan
-# from models.textGan_MMD.Textgan import TextganMmd
+from models.seqgan_pos.Seqgan import Seqgan as Seqgan_pos
+from models.seqgan_neg.Seqgan import Seqgan as Seqgan_neg
+from models.cseqgan_g1d1.CSeqgan import CSeqgan as CSeqgan_g1d1
+from models.cseqgan_g1d2.CSeqgan import CSeqgan as CSeqgan_g1d2
+from models.cseqgan_g1d3.CSeqgan import CSeqgan as CSeqgan_g1d3
+from models.cseqgan_g2d1.CSeqgan import CSeqgan as CSeqgan_g2d1
+from models.cseqgan_g2d2.CSeqgan import CSeqgan as CSeqgan_g2d2
+from models.cseqgan_g2d3.CSeqgan import CSeqgan as CSeqgan_g2d3
+from models.cseqgan_g3d1.CSeqgan import CSeqgan as CSeqgan_g3d1
+from models.cseqgan_g3d2.CSeqgan import CSeqgan as CSeqgan_g3d2
+from models.cseqgan_g3d3.CSeqgan import CSeqgan as CSeqgan_g3d3
+
 
 
 def set_gan(gan_name):
     gans = dict()
-    # gans['seqgan'] = Seqgan
-    # gans['gsgan'] = Gsgan
-    # gans['textgan'] = TextganMmd
-    # gans['leakgan'] = Leakgan
-    # gans['rankgan'] = Rankgan
-    # gans['maligan'] = Maligan
-    # gans['mle'] = Mle
-    gans['cseqgan'] = CSeqgan
+    gans['seqgan_pos'] = Seqgan_pos
+    gans['seqgan_neg'] = Seqgan_neg
+    gans['cseqgan_g1d1'] = CSeqgan_g1d1
+    gans['cseqgan_g1d2'] = CSeqgan_g1d2
+    gans['cseqgan_g1d3'] = CSeqgan_g1d3
+    gans['cseqgan_g2d1'] = CSeqgan_g2d1
+    gans['cseqgan_g2d2'] = CSeqgan_g2d2
+    gans['cseqgan_g2d3'] = CSeqgan_g2d3
+    gans['cseqgan_g3d1'] = CSeqgan_g3d1
+    gans['cseqgan_g3d2'] = CSeqgan_g3d2
+    gans['cseqgan_g3d3'] = CSeqgan_g3d3
+
     try:
         Gan = gans[gan_name.lower()]
         gan = Gan()
@@ -54,13 +67,13 @@ def set_training(gan, training_method):
 
 def parse_cmd(argv):
     try:
-        opts, args = getopt.getopt(argv, "hg:t:d:")
+        opts, args = getopt.getopt(argv, "hg:t:d:p:")
 
         opt_arg = dict(opts)
         if '-h' in opt_arg.keys():
             print('usage: python main.py -g <gan_type>')
             print('       python main.py -g <gan_type> -t <train_type>')
-            print('       python main.py -g <gan_type> -t realdata -d <your_data_location>')
+            print('       python main.py -g <gan_type> -t realdata -d <your_data_location> -p <location_to_save_generated_files>')
             sys.exit(0)
         if not '-g' in opt_arg.keys():
             print('unspecified GAN type, use MLE training only...')
@@ -71,8 +84,8 @@ def parse_cmd(argv):
             gan.train_oracle()
         else:
             gan_func = set_training(gan, opt_arg['-t'])
-            if opt_arg['-t'] == 'real' and '-d' in opt_arg.keys():
-                gan_func(opt_arg['-d'])
+            if opt_arg['-t'] == 'real' and '-d' in opt_arg.keys() and '-p' in opt_arg.keys():
+                gan_func(opt_arg['-d'], opt_arg['-p'])
             else:
                 gan_func()
     except getopt.GetoptError:
