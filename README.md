@@ -67,7 +67,7 @@ Due to Privacy concerns, we are only able to share the IMDb Movie Reviews (https
     * data/movie_review_neg.csv
         * negative movie reviews
         * header-less csv with one column: review
-<br/>
+	
 * Private Text Messages (Sent within last 2 months):
     * data/textMsgs.csv
         * the original data is filtered for messages with: <br/>
@@ -81,7 +81,7 @@ Due to Privacy concerns, we are only able to share the IMDb Movie Reviews (https
     * data/textMsgs_NotDepressed.csv
         * Not Depressed text messages
         * header-less csv with one column: message
-<br/>
+
 * Interview Data (DAIC_WOZ processed text data):
     * data/interview_combined.csv
         * combined depressed and not-depressed interview data
