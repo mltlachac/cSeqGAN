@@ -4,6 +4,22 @@ Includes code to run all nine conditioned seqGAN (CSeqGAN) models, unconditioned
 
 We borrowed and adapted generative code from [Texygen benchmarking platform](https://github.com/geek-ai/Texygen).
 
+If our code is used, also cite our cSeqGAN paper:
+
+ML Tlachac, Walter Gerych, Kratika Agrawal, Benjamin Litterer, Nicholas Jurovich, Saitheeraj Thatigotla, Jidapa Thadajarassiri, Elke Rundensteiner, “Text Generation to Aid Depression Detection: A Comparative Study of Conditional Sequence Generative Adversarial Networks”, IEEE International Conference on Big Data (BigData) Workshop on Big Data Analytic in Healthcare, 2022
+
+```
+@inproceedings{tlachac2022text,
+  title={Text Generation to Aid Depression Detection: A Comparative Study of Conditional Sequence Generative Adversarial Networks},
+  author={Tlachac, ML and Gerych, Walter and Agrawal, Kratika and Litterer, Benjamin and Jurovich, Nicholas and Thatigotla, Saitheeraj and Thadajarassiri, Jidapa and Rundensteiner, Elke A},
+  booktitle={2022 IEEE International Conference on Big Data (Big Data)},
+  pages={2804--2813},
+  year={2022},
+  organization={IEEE}
+}
+```
+
+This research is part of the Emutivo project. For more information, visit our project website: *https://emutivo.wpi.edu/*
 
 ## Models:
 
